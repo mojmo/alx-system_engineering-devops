@@ -3,7 +3,7 @@
 
 file="/etc/passwd"
 
-while IFC=':' read -r username password userid groupid userinfo homedir shell;
+while IFS=':' read -r username password userid groupid userinfo homedir shell;
 do
     echo "The user $username is part of the $groupid gang,"\
     "lives in $homedir and rides $shell."\
