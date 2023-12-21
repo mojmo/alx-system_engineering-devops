@@ -5,7 +5,8 @@
 # Displays Buzz when the number is a multiple of 5
 # Otherwise, displays the number
 
-for ((num=1; num<=100; num++)); do
+for num in {1..100}
+do
     if (( num % 3 == 0 ))
     then
         echo "Fizz"
