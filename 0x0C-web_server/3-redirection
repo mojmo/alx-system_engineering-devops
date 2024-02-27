@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Bash script that configures a new Ubuntu machine to respect following requirements
+# Requirements:
+#   Install nginx on your web-01 server
+#   Nginx should be listening on port 80
+#   When querying Nginx at its root / with a GET request (requesting a page) using curl,
+#   it must return a page that contains the string Hello World!
+#   Configure your Nginx server so that /redirect_me is redirecting to another page.
+#   The redirection must be a “301 Moved Permanently”
+
+# Install the Nginx web server software.
+apt-get update -y
+apt-get install -y nginx
+
+# Write "Hello World!" to the index.html file.
+echo "Hello World!" > /var/www/html/index.html
+
+# Configure Nginx server
+cat > /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80;
+    listen [::]:80;
+    root /var/www/example.com/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location /redirect_me {
+        return 301 https://google.com/;
+    }
+}
+EOF
+
+# Restart the Nginx service to apply the new configuration.
+service nginx restart
