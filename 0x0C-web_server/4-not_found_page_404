@@ -7,6 +7,8 @@
 #   it must return a page that contains the string Hello World!
 #   Configure your Nginx server so that /redirect_me is redirecting to another page.
 #   The redirection must be a “301 Moved Permanently”
+#   Configure your Nginx server to have a custom 404 page that
+#   contains the string Ceci n'est pas une page.
 
 # Install the Nginx web server software.
 apt-get update -y
@@ -14,6 +16,9 @@ apt-get install -y nginx
 
 # Write "Hello World!" to the index.html file.
 echo "Hello World!" > /var/www/html/index.html
+
+# Create the custom 404 page.
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 
 # Configure Nginx server
 cat > /etc/nginx/sites-available/default <<EOF
@@ -25,6 +30,12 @@ server {
 
     location /redirect_me {
         return 301 https://google.com/;
+    }
+
+    error_page 404 /404.html;
+    location /404.html {
+        root /var/www/html;
+        internal;
     }
 }
 EOF
