@@ -8,19 +8,12 @@
 #   The redirection must be a “301 Moved Permanently”
 
 package { 'nginx':
-    ensure => present,
+    ensure => 'present',
 }
 
-file { '/var/www/html/index.html':
-    ensure  => file,
-    content => 'Hello World!',
-    require => Package['nginx'],
-}
-
-file { '/var/www/html/404.html':
-    ensure  => file,
-    content => 'Ceci n'est pas une page',
-    require => Package['nginx'],
+exec {'root_page':
+    provider    => shell,
+    command     => 'sudo echo Hello World! > /var/www/html/index.html',
 }
 
 exec { 'redirect':
