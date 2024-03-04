@@ -3,6 +3,11 @@
 # 2. Sets nginx to listen on port 80
 # 3. creating a custom HTTP header response
 
+exec { 'update packages':
+  provider => 'shell',
+  command  => 'sudo apt-get -y update',
+}
+
 package { 'nginx':
     ensure => 'present',
 }
