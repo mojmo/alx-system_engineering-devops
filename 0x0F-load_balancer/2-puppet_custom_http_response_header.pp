@@ -15,7 +15,7 @@ package { 'nginx':
 
 exec { 'save hostname in a var':
   provider => 'shell',
-  command  => 'HOSTNAME=$(hostname)',
+  command  => 'export HOSTNAME=$(hostname)',
 }
 
 file_line { 'add new HTTP header':
