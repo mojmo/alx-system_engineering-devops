@@ -7,15 +7,19 @@ package { 'nginx':
     ensure => 'present',
 }
 
-file_line { 'add new HTTP header':
-  ensure => 'present',
-  path   => '/etc/nginx/sites-available/default',
-  after  => 'listen 80 default_server;',
-  line   => 'add_header X-Served-By $hostname;'
+exec {'root_page':
+    provider    => shell,
+    command     => 'sudo echo Hello World! > /var/www/html/index.html',
 }
 
-service { 'nginx':
-  ensure  => 'running',
-  enable  => true,
-  require => Package['nginx']
+exec { 'add_header':
+    provider    => shell,
+    command     => 'HOSTNAME=$(hostname); sudo sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\tadd_header X-Served-By "$HOSTNAME";/" /etc/nginx/sites-available/default',
 }
+
+
+exec {'restart_server':
+    provider    => shell,
+    command     => 'sudo service nginx restart',
+}
+
