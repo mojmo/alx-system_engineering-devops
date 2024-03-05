@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Bash script that configures a new Ubuntu machine
+
+# Install the Nginx web server software.
+apt-get update -y
+apt-get install -y nginx
+
+# Restart the Nginx service to apply the new configuration.
+service nginx restart
+
