@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# retrieve and display DNS information for a given domain and subdomain(s). 
+
+get_domain_info () {
+
+    local domain="$1"
+    local subdomain="$2"
+    local line
+
+    # perform a DNS lookup for the given subdomain under the specified domain
+    line=$(dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
+
+    # prints the extracted information in a formatted manner
+    echo "$subdomain $line" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
+}
+
+if [ "$#" -eq 1 ]; then
+    for sub in "www" "lb-01" "web-01" "web-02"; do
+        get_domain_info "$1" "$sub"
+    done
+elif [ "$#" -eq 2 ]; then
+    get_domain_info "$1" "$2"
+fi
