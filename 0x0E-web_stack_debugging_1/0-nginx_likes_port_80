@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Bash script that configures a new Ubuntu machine
+
+# emoves the default configuration file (default) from the sites-enabled
+rm /etc/nginx/sites-enabled/default
+
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Restart the Nginx service to apply the new configuration.
+service nginx restart
+
