@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# install the ufw firewall and setup a few rules on server.
+
+# Install ufw:
+apt install ufw
+
+# block all incoming traffic
+ufw default deny incoming
+
+# Allow SSH (port 22), HTTPS (port 443), and HTTP (port 80) traffic
+ufw allow 22/tcp
+ufw allow 443/tcp
+ufw allow 80/tcp
+
+# Enable ufw
+ufw enable
+
