@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# configures the container so that Nginx is running as the nginx user.
+
+# Modify the Nginx configuration to run as the nginx user
+sed -i 's/#user www-data/user nginx/' /etc/nginx/nginx.conf
+
+# Modify the Nginx configuration to listen on all active IPs on port 8080
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+
+# sets the permissions of the Nginx configuration file
+chmod 644 /etc/nginx/nginx.conf
+
+# terminate any running Apache processes
+pkill apache2
+
+# Restart the Nginx service to apply the new configuration.
+sudo -u nginx service nginx start
