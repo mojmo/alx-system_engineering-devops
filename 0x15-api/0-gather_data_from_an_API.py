@@ -6,12 +6,12 @@ based on the provided user ID. It then prints the user's name and the number
 of completed tasks along with their titles.
 """
 
-from sys import argv
 import requests
+import sys
 
 if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/"
-    user_id = argv[1]
+    user_id = sys.argv[1]
 
     # Fetch user data
     user_response = requests.get(f"{url}users/{user_id}")
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # Extract completed tasks titles
     completed_tasks = [t.get("title") for t in todos if t.get("completed")]
 
-    print("Employee {} is done with tasks({}/{})".format(
+    print("Employee {} is done with tasks({}/{}):".format(
         user.get("name"),
         len(completed_tasks),
         len(todos)
