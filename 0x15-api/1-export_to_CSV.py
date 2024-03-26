@@ -22,9 +22,6 @@ if __name__ == "__main__":
     todos_response = requests.get(f"{url}todos", params={"userId": user_id})
     todos = todos_response.json()
 
-    # Extract completed tasks titles
-    completed_tasks = [t.get("title") for t in todos if t.get("completed")]
-
     # Extract completed tasks and prepare CSV data
     tasks_data = []
 
