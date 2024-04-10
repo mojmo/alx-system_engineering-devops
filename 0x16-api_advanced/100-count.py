@@ -7,8 +7,8 @@ and print a sorted count of given keywords. The function counts
 occurrences of each keyword in the titles of the hot articles.
 """
 
-import requests
 import re
+import requests
 
 
 def count_words(subreddit, word_list, after=None, word_count={}):
