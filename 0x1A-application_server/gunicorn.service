@@ -1,0 +1,29 @@
+[Unit]
+Description=Gunicorn instance to serve AirBnB clone
+# Ensure the network is available before starting this service.
+After=network.target
+
+[Service]
+# Run the Gunicorn process under the 'ubuntu' user account.
+User=ubuntu
+# Set the working directory for the Gunicorn process. This should point to the directory containing your Flask application code.
+WorkingDirectory=/home/ubuntu/AirBnB_clone_v4
+# This command defines how to start Gunicorn:
+#   - `gunicorn`: The Gunicorn executable
+#   - `--bind 0.0.0.0:5003`: Binds the application to all interfaces (0.0.0.0) on port 5003
+#   - `--workers=3`: Starts 3 worker processes to handle requests concurrently
+#   - `--access-logfile /tmp/airbnb-access.log`: Logs access information to /tmp/airbnb-access.log
+#   - `--error-logfile /tmp/airbnb-error.log`: Logs errors to /tmp/airbnb-error.log
+#   - `web_dynamic.2-hbnb:app`: The application object to be served (replace with your actual import path)
+ExecStart=gunicorn --bind 0.0.0.0:5003 --workers=3 --access-logfile /tmp/airbnb-access.log --error-logfile /tmp/airbnb-error.log web_dynamic.2-hbnb:app
+# Automatically restart the service if it crashes or exits unexpectedly.
+Restart=always
+# Redirect both standard output and standard error of the Gunicorn process to the respective log files for better monitoring.
+StandardOutput=append:/tmp/airbnb-access.log
+StandardError=append:/tmp/airbnb-error.log
+# Set the syslog identifier for Gunicorn messages.
+SyslogIdentifier=gunicorn
+
+[Install]
+# Enable this service to start automatically when the system boots into multi-user mode.
+WantedBy=multi-user.target
